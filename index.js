@@ -5,7 +5,7 @@ const config = require("./config.json");
 const courses = config.courses;
 const url = config.url;
 
-studIpInterface = new StudIP(url, credentials);
+studIpInterface = new StudIP(url, credentials.stud_ip);
 
 (async function () {
   run();
