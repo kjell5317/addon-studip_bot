@@ -1,0 +1,12 @@
+{
+  "name": "docker-studip_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "kjell5317",
+  "license": "ISC",
+  "dependencies": {}
+}
