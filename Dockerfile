@@ -1,8 +1,12 @@
-FROM node:latest
+FROM node:current-alpine
 
 ENV LANG C.UTF-8
 
 WORKDIR /server
+
+RUN apk add --no-cache \
+    nodejs \
+    npm
 
 COPY ["package*.json", "./"]
 

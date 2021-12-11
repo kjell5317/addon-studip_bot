@@ -1,59 +1,46 @@
 {
-  "url": "https://elearning.uni-oldenburg.de/api.php/",
+  "haURL": "http://10.0.20.20:8123/api/",
+  "studipURL": "https://elearning.uni-oldenburg.de/api.php/",
+  "download_folder": "files/",
   "courses": [
     {
-      "name": "DS",
-      "id": {
-        "VL": "7542d6cde22e71139575db2c486f1deb",
-        "ÜB": "24766f2ed6b094ad3cf517d81c2f977e"
-      },
-      "folder": [
-        {
-          "name": "VL Übungsblätter",
-          "id": "e9be91113ee1b1e09505857a72128f70",
-          "regex": "ds-2021-ha\\d{2}.pdf"
-        },
-        {
-          "name": "VL Vorlesungsfolien",
-          "id": "eedfb644c37381febaa5b870ed056784",
-          "regex": "ds-2021-fo-w\\d{2}.pdf"
-        },
-        {
-          "name": "ÜB Kurzskript",
-          "id": "4d76d88f8c7b5b3db18743ca8543302b",
-          "regex": "Kurzskript\\sW\\d{2}.pdf"
-        },
-        {
-          "name": "ÜB Korrektur",
-          "id": "d666a46dcef7cf73c394c1ee5b6022dc",
-          "regex": "DS_ÜB\\d{2}_GrG.pdf"
-        }
-      ]
+      "name": "DS Vorlesung",
+      "id": "7542d6cde22e71139575db2c486f1deb",
+      "prefix": "ds-2021-ha\\d{2}\\.pdf|ds-2021-fo-w\\d{2}\\.pdf"
     },
     {
-      "name": "PDA",
-      "id": {
-        "VL": "0d4746dedefde063805ea0ec7c636337",
-        "ÜB": "5dda01c687436d5c39b84b531e6ba3bd",
-        "ÜB_A": "c9d78299ca905e762b8376098c60b13a"
-      },
-      "folder": [
-        {
-          "name": "VL Übungsblätter",
-          "id": "6868f3e150e7fb67a1e41a2578645684",
-          "regex": "pda_exercise_\\d{2}.(pdf|zip)"
-        },
-        {
-          "name": "VL Vorlesungsfolien",
-          "id": "6147e2daf56e79f54e864f0eeec59791",
-          "regex": "V\\d{2}\\s-\\s(\\w.*)+.pdf"
-        },
-        {
-          "name": "VL Ranking",
-          "id": "82401a8c2cc81cf89b4575b099b4b0a3",
-          "regex": "ranking_\\d{4}-\\d{2}-\\d{2}.htm"
-        }
-      ]
+      "name": "DS Übung",
+      "id": "24766f2ed6b094ad3cf517d81c2f977e",
+      "prefix": "DS_ÜB_\\d{2}_GrG\\.pdf|Kurzskript\\sW\\d{2}\\.pdf"
+    },
+    {
+      "name": "LA Vorlesung",
+      "id": "5b8202e436b23198f924f275704722f8",
+      "prefix": "Ueb\\d+\\.pdf"
     }
+  ],
+  "folders": [
+    [
+      {
+        "prefix": "ds-2021-ha\\d{2}\\.pdf|DS_ÜB\\d{2}_GrG\\.pdf",
+        "number": "\\d{2}(?=\\.pdf)|\\d{2}(?=_GrG\\.pdf)",
+        "dest": "11Ck_fIsCxWySDh1C1ZD53GMwPaW-tqCC"
+      },
+      {
+        "prefix": "Ueb\\d+\\.pdf",
+        "number": "\\d+(?=\\.pdf)",
+        "dest": "1VlhWfyE6aOfoGcNeNUvkXjy5bLrLd2PU"
+      }
+    ],
+    [
+      {
+        "prefix": "ds-2021-fo-w\\d{2}.pdf|Kurzskript\\sW\\d{2}\\.pdf",
+        "dest": "1EZlg2eESzPzVeuBg1uLxqHs9LQIEhkuD"
+      },
+      {
+        "prefix": "ds-2021-fo-w\\d{2}.pdf|Kurzskript\\sW\\d{2}\\.pdf",
+        "dest": "1EZlg2eESzPzVeuBg1uLxqHs9LQIEhkuD"
+      }
+    ]
   ]
 }

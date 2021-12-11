@@ -8,5 +8,8 @@
   },
   "author": "kjell5317",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "node-fetch": "^2.6.6",
+    "googleapis": "^92.0.0"
+  }
 }

@@ -36,3 +36,4 @@ web_modules/
 secrets.*
 files/
 hash.json
+token.json

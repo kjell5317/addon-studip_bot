@@ -1,43 +1,84 @@
 const fetch = require("node-fetch");
 const fs = require("fs");
-const courses = require("./config.json").courses;
 
-class StudIPInterface {
-  constructor(apiURL, userData = { name, password }) {
-    this.url = apiURL;
-    this.userData = userData;
+const GoogleDrive = require("./GoogleDrive");
+const secrets = require("./secrets.json").stud_ip;
+const url = require("./config.json").studipURL;
+const downloadPrefix = require("./config.json").download_folder;
 
-    this.foundFiles = [];
-    this.hashFile = "hash.json";
-    this.downloadPrefix = "files/";
+const hashFile = "hash.json";
 
-    if (!fs.existsSync(this.downloadPrefix)) {
-      fs.mkdirSync(this.downloadPrefix);
+var foundFiles = null;
+
+class StudIP {
+  constructor() {
+    if (!fs.existsSync(downloadPrefix)) {
+      fs.mkdirSync(downloadPrefix);
     }
   }
 
-  async findFilesInCourse(course) {
-    console.log(this.foundFiles);
-    for (const folder of courses[course].folder) {
-      const subfolder = await this.getAllFoldersInFolder(folder.id);
-
-      if (subfolder.collection.length) {
-        return await this.getAllFilesInFolder(folder.id, true);
+  async downloadFoundFiles() {
+    if (!foundFiles) return;
+    let newFiles = this.testForNewFiles(foundFiles);
+    console.info(`Downloading ${newFiles.length} new files.`);
+    const paths = [];
+    for (const file of newFiles) {
+      const path = downloadPrefix + file.name;
+      if (!fs.existsSync(downloadPrefix)) {
+        fs.mkdirSync(downloadPrefix);
       }
-      let allFiles = await this.getAllFilesInFolder(folder.id, false);
-      let re = new RegExp(folder.regex, "");
-      this.foundFiles.push(
-        allFiles.filter((file) => {
-          return re.test(file.name);
-        })
-      );
-      console.log(this.foundFiles);
+      const data = await this.apiRequest(`/file/${file.id}/download`, "file");
+      let buffer = Buffer.from(data);
+      fs.writeFile(path, buffer, "binary", () => {});
+      paths.push(path);
+      GoogleDrive.authorize(file.name, file.mime_type);
     }
-    return await this.downloadFoundFiles();
+    foundFiles = null;
+    return paths;
   }
+
+  testForNewFiles(fileList) {
+    try {
+      fs.statSync(hashFile);
+    } catch {
+      console.log("Hashfile doesn't exists");
+      return [];
+    }
+    let hash = JSON.parse(fs.readFileSync(hashFile));
+    fileList = fileList.filter(
+      (file) => !hash.hashes.find((val) => val == getHash(file))
+    );
+
+    fileList.map((file) => {
+      hash.hashes.push(getHash(file));
+    });
+    hash.lastModified = Date.now();
+
+    fs.writeFileSync(hashFile, JSON.stringify(hash, false, 2));
+    return fileList;
+
+    function getHash(file) {
+      return file.name;
+    }
+  }
+
+  async findFilesInCourse(fileName, courseId) {
+    const res = await this.apiRequest(`course/${courseId}/top_folder`);
+    let allFiles = await this.getAllFilesInFolder(res.id, true);
+
+    let re = new RegExp(fileName);
+    foundFiles = allFiles.filter((file) => {
+      return re.test(file.name);
+    });
+
+    return allFiles;
+  }
+
   async getAllFilesInFolder(folderId, recursive = false) {
     const files = await this.apiRequest(`folder/${folderId}/files`);
+
     const allFiles = [];
+
     if (!files) return allFiles;
     for (const file in files.collection) allFiles.push(files.collection[file]);
 
@@ -52,6 +93,7 @@ class StudIPInterface {
         allFiles.push(...recursiveFiles);
       }
     }
+
     return allFiles;
   }
 
@@ -60,74 +102,21 @@ class StudIPInterface {
     return res;
   }
 
-  async downloadFoundFiles() {
-    if (!this.foundFiles.length) return false;
-
-    const newFiles = this.testForNewFiles(this.foundFiles);
-    console.info("Downloading " + newFiles.length + " new files.");
-
-    for (const file of newFiles) {
-      if (!fs.existsSync(this.downloadPrefix)) {
-        fs.mkdirSync(this.downloadPrefix);
-      }
-
-      const data = await this.apiRequest(`/file/${file.id}/download`, "file");
-      let buffer = Buffer.from(data);
-
-      const path = `${this.downloadPrefix}/${file.name}`;
-      fs.writeFile(path, buffer, "binary", () => {});
-    }
-
-    this.foundFiles = [];
-
-    return true;
-  }
-
-  testForNewFiles(fileList) {
-    try {
-      if (fs.statSync(this.hashFile));
-    } catch {
-      console.log("Hashfile does not exist");
-      fs.writeFileSync(
-        this.hashFile,
-        JSON.stringify({ lastModified: null, hashes: [] })
-      );
-    }
-    const hashFile = JSON.parse(fs.readFileSync(this.hashFile));
-    fileList = fileList.filter(
-      (file) => !hashFile.hashes.find((val) => val == getHash(file))
-    );
-
-    fileList.map((file) => {
-      hashFile.hashes.push(getHash(file));
-    });
-    hashFile.lastModified = Date.now();
-
-    fs.writeFileSync(this.hashFile, JSON.stringify(hashFile, false, 2));
-    return fileList;
-
-    function getHash(file) {
-      return `${file.file_id} ${file.name}`;
-    }
-  }
-
   async apiRequest(path, type) {
-    let response = await fetch(this.url + path, {
+    let response = await fetch(url + path, {
       method: "GET",
       headers: {
         Authorization:
           "Basic " +
-          Buffer.from(
-            this.userData.name + ":" + this.userData.password
-          ).toString("base64"),
+          Buffer.from(`${secrets.name}:${secrets.password}`).toString("base64"),
       },
-    }).catch((err) => {
-      console.log(`ERROR: ${err}`);
     });
+
     if (!response.ok) {
-      console.log(`ERROR: ${response.error} with ${path}`);
+      console.log("ERROR");
       return;
     }
+
     switch (type) {
       case "text":
         response = await response.text();
@@ -138,8 +127,9 @@ class StudIPInterface {
       default:
         response = await response.json();
     }
+
     return response;
   }
 }
 
-module.exports = StudIPInterface;
+module.exports = StudIP;

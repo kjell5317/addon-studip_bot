@@ -1,22 +1,36 @@
 const StudIP = require("./StudIP");
+const fs = require("fs");
+const GoogleDrive = require("./GoogleDrive");
 
-const credentials = require("./secrets.json");
 const config = require("./config.json");
-const courses = config.courses;
-const url = config.url;
+const hashes = require("./hash.json").hashes;
 
-studIpInterface = new StudIP(url, credentials.stud_ip);
+studIpInterface = new StudIP();
 
 (async function () {
-  run();
-  setInterval(run, 6000);
+  sync();
+  setInterval(sync, 10 * 60 * 1000);
 })();
 
-async function run() {
-  for (i = 0; i < courses.length; i++) {
-    console.info("####################");
-    console.info(courses[i].name);
+// (async function () {
+//   update();
+//   setInterval(update, 60 * 1000);
+// })();
 
-    console.log(await studIpInterface.findFilesInCourse(i));
+async function sync() {
+  for (course of config.courses) {
+    console.info("####################");
+    console.info(course.name);
+    await studIpInterface.findFilesInCourse(course.prefix, course.id);
+    await studIpInterface.downloadFoundFiles();
+  }
+  for (hash of hashes) {
+    if (fs.existsSync(`${config.download_folder}${hash}`)) {
+      fs.unlinkSync(`${config.download_folder}${hash}`);
+    }
   }
 }
+
+// async function update() {
+//   GoogleDrive.update();
+// }
