@@ -3,6 +3,9 @@ version: "3"
 services:
   stud_ip:
       build: .
+      image: kjell5317/stud_ip
+      container_name: stud_ip
+      restart: unless-stopped
       volumes:
         - stud_ip:/data
 
