@@ -4,14 +4,10 @@ ENV LANG C.UTF-8
 
 WORKDIR /server
 
-RUN apk add --no-cache \
-    nodejs \
-    npm
-
-COPY ["package*.json", "./"]
+COPY src/package.json .
 
 RUN npm i
 
-COPY . .
+COPY src .
 
 CMD ["node", "index.js"]
