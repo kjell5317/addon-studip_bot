@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  stud_ip:
+      build: .
+      volumes:
+        - stud_ip:/data
+
+volumes:
+  stud_ip:
