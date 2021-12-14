@@ -113,6 +113,7 @@ async function uploadFiles(auth, name, mime) {
       title: "StudIP",
       message: `Neu: ${name}`,
       data: {
+        tag: `${name}${parent}`,
         clickAction: `https://drive.google.com/drive/u/0/folders/${parent}`,
       },
     }),
