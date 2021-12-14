@@ -1,16 +1,17 @@
 const fs = require("fs");
+const fetch = require("node-fetch");
 const readline = require("readline");
 const { google } = require("googleapis");
-const secrets = require("./secrets.json").google_drive;
-const folders = require("./config.json").folders;
-const downloadPrefix = require("./config.json").download_folder;
+const secrets = require("./config/secrets.json");
+const config = require("./config/config.json");
+const downloadPrefix = config.download_folder;
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ["https://www.googleapis.com/auth/drive"];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-TOKEN_PATH = "token.json";
+TOKEN_PATH = "config/token.json";
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -18,8 +19,8 @@ TOKEN_PATH = "token.json";
  * @param name The name of the file
  * @param mime The mime_type of the file
  */
-function authorize(name, mime) {
-  const { client_secret, client_id, redirect_uris } = secrets;
+async function authorize(name, mime) {
+  const { client_secret, client_id, redirect_uris } = secrets.google_drive;
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
     client_secret,
@@ -40,7 +41,7 @@ function authorize(name, mime) {
  * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
  * @param {getEventsCallback} callback The callback for the authorized client.
  */
-function getAccessToken(oAuth2Client, name, mime) {
+async function getAccessToken(oAuth2Client, name, mime) {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: SCOPES,
@@ -69,10 +70,10 @@ function getAccessToken(oAuth2Client, name, mime) {
  * Lists the names and IDs of up to 10 files.
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function uploadFiles(auth, name, mime) {
+async function uploadFiles(auth, name, mime) {
   const drive = google.drive({ version: "v3", auth });
   var parent = "1aDoDlVRr3c9dvLUaAV2lXC5AEgNeAPRd";
-  for (array of folders) {
+  for (array of config.folders) {
     for (folder of array) {
       const regex = new RegExp(folder.prefix);
       if (regex.test(name)) {
@@ -102,10 +103,27 @@ function uploadFiles(auth, name, mime) {
       }
     }
   );
+  let res = await fetch(`${config.haURL}services/notify/mobile_app_k_handy`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${secrets.home_assistant.api_key}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title: "StudIP",
+      message: `Neu: ${name}`,
+      data: {
+        clickAction: `https://drive.google.com/drive/u/0/folders/${parent}`,
+      },
+    }),
+  });
+  if (!res.ok) {
+    console.log("ERROR");
+  }
 }
 
 // function update() {
-//   const { client_secret, client_id, redirect_uris } = secrets;
+//   const { client_secret, client_id, redirect_uris } = secrets.google_drive;
 //   const oAuth2Client = new google.auth.OAuth2(
 //     client_id,
 //     client_secret,

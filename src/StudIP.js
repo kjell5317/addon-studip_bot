@@ -2,11 +2,11 @@ const fetch = require("node-fetch");
 const fs = require("fs");
 
 const GoogleDrive = require("./GoogleDrive");
-const secrets = require("./secrets.json").stud_ip;
-const url = require("./config.json").studipURL;
-const downloadPrefix = require("./config.json").download_folder;
+const secrets = require("./config/secrets.json").stud_ip;
+const url = require("./config/config.json").studipURL;
+const downloadPrefix = require("./config/config.json").download_folder;
 
-const hashFile = "hash.json";
+const hashFile = "data/hash.json";
 
 var foundFiles = null;
 
@@ -31,7 +31,7 @@ class StudIP {
       let buffer = Buffer.from(data);
       fs.writeFile(path, buffer, "binary", () => {});
       paths.push(path);
-      GoogleDrive.authorize(file.name, file.mime_type);
+      await GoogleDrive.authorize(file.name, file.mime_type);
     }
     foundFiles = null;
     return paths;

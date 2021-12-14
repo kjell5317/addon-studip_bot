@@ -2,8 +2,8 @@ const StudIP = require("./StudIP");
 const fs = require("fs");
 const GoogleDrive = require("./GoogleDrive");
 
-const config = require("./config.json");
-const hashes = require("./hash.json").hashes;
+const config = require("./config/config.json");
+const hashes = require("./data/hash.json").hashes;
 
 studIpInterface = new StudIP();
 

@@ -1,7 +1,7 @@
 {
   "haURL": "http://10.0.20.20:8123/api/",
   "studipURL": "https://elearning.uni-oldenburg.de/api.php/",
-  "download_folder": "files/",
+  "download_folder": "data/files/",
   "courses": [
     {
       "name": "DS Vorlesung",
@@ -17,10 +17,30 @@
       "name": "LA Vorlesung",
       "id": "5b8202e436b23198f924f275704722f8",
       "prefix": "Ueb\\d+\\.pdf"
+    },
+    {
+      "name": "LA Übung",
+      "id": "3c05b9ae5fe854448a1b4173609ed372",
+      "prefix": "Gr?10_KjellHanken.*\\.pdf"
+    },
+    {
+      "name": "GTI Vorlesung",
+      "id": "33b8a06bfee469e38e269d19f553d578",
+      "prefix": "Uebungsblatt\\d{2}\\.pdf"
+    },
+    {
+      "name": "SoftSkills",
+      "id": "07b44897fbca17d9cc8372a5c67357b3",
+      "prefix": "UE\\d+\\.pdf"
     }
   ],
   "folders": [
     [
+      {
+        "prefix": "Uebungsblatt\\d{2}\\.pdf",
+        "number": "\\d{2}(?=\\.pdf)|\\d{2}(?=_Gruppe15\\.pdf)",
+        "dest": "1iSRSpo2I8eRMXi7TP6xMC1XX9P3RmANa"
+      },
       {
         "prefix": "ds-2021-ha\\d{2}\\.pdf|DS_ÜB\\d{2}_GrG\\.pdf",
         "number": "\\d{2}(?=\\.pdf)|\\d{2}(?=_GrG\\.pdf)",
@@ -30,6 +50,11 @@
         "prefix": "Ueb\\d+\\.pdf",
         "number": "\\d+(?=\\.pdf)",
         "dest": "1VlhWfyE6aOfoGcNeNUvkXjy5bLrLd2PU"
+      },
+      {
+        "prefix": "UE\\d+\\.pdf",
+        "number": "\\d+(?=\\.pdf)",
+        "dest": "1BkRtzAJstkD4dj85_kW7_f_10A4p5D1S"
       }
     ],
     [
@@ -40,6 +65,10 @@
       {
         "prefix": "ds-2021-fo-w\\d{2}.pdf|Kurzskript\\sW\\d{2}\\.pdf",
         "dest": "1EZlg2eESzPzVeuBg1uLxqHs9LQIEhkuD"
+      },
+      {
+        "prefix": "Gr?10_KjellHanken.*\\.pdf",
+        "dest": "1VlhWfyE6aOfoGcNeNUvkXjy5bLrLd2PU"
       }
     ]
   ]
