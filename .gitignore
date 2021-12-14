@@ -35,5 +35,4 @@ web_modules/
 # Project related
 secrets.*
 files/
-hash.json
 token.json
