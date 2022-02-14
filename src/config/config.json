@@ -1,7 +1,7 @@
 {
   "haURL": "http://10.0.20.20:8123/api/",
   "studipURL": "https://elearning.uni-oldenburg.de/api.php/",
-  "download_folder": "data/files/",
+  "download_folder": "config/data/files/",
   "courses": [
     {
       "name": "DS Vorlesung",

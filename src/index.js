@@ -3,7 +3,7 @@ const fs = require("fs");
 const GoogleDrive = require("./GoogleDrive");
 
 const config = require("./config/config.json");
-const hashes = require("./data/hash.json").hashes;
+const hashes = require("./config/data/hash.json").hashes;
 
 studIpInterface = new StudIP();
 

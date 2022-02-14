@@ -9,6 +9,7 @@
   "author": "kjell5317",
   "license": "ISC",
   "dependencies": {
+    "nodemon": "^2.0.15",
     "node-fetch": "^2.6.6",
     "googleapis": "^92.0.0"
   }

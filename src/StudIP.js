@@ -6,7 +6,7 @@ const secrets = require("./config/secrets.json").stud_ip;
 const url = require("./config/config.json").studipURL;
 const downloadPrefix = require("./config/config.json").download_folder;
 
-const hashFile = "data/hash.json";
+const hashFile = "config/data/hash.json";
 
 var foundFiles = null;
 
