@@ -13,4 +13,5 @@ COPY src/package.json .
 RUN npm i
 COPY src .
 
-CMD [ "node", "index.js" ]
+RUN chmod +x /run.sh
+CMD [ "/run.sh" ]
