@@ -1,11 +1,11 @@
 {
   "name": "StudIP",
-  "version": "0.4",
+  "version": "0.3",
   "slug": "studip",
   "description": "StudIP Bot with Google Drive upload",
   "url": "https://github.com/kjell5317/addon-studip_bot",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
-  "startup": "service",
+  "startup": "application",
   "boot": "auto",
   "ports": {},
   "options": {},
