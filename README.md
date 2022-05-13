@@ -1,6 +1,6 @@
 # Docker StudIP Bot
 
-## src/config
+## Configuration
 
 ### config.json
 
@@ -19,13 +19,9 @@
     "name": "<YOUR_USERNAME>",
     "password": "<YOUR_PASSWORD>"
   },
-  "google_drive": "insert the <installed object from your secrets file here>",
+  "google_drive": "",
   "home_assistant": {
     "api_key": "<YOUR_API_KEY>"
   }
 }
 ```
-
-## Run Container
-
-`docker-compose up -d`

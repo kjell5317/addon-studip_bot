@@ -13,5 +13,6 @@ COPY src/package.json .
 RUN npm i
 COPY src .
 
+COPY run.sh .
 RUN chmod +x /run.sh
 CMD [ "/run.sh" ]
