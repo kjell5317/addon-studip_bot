@@ -2,8 +2,8 @@ const fs = require("fs");
 const fetch = require("node-fetch");
 const readline = require("readline");
 const { google } = require("googleapis");
-const secrets = require("./config/secrets.json");
-const config = require("./config/config.json");
+const secrets = require("./config/studip/secrets.json");
+const config = require("./config/studip/config.json");
 const downloadPrefix = config.download_folder;
 
 // If modifying these scopes, delete token.json.
@@ -11,7 +11,7 @@ const SCOPES = ["https://www.googleapis.com/auth/drive"];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-TOKEN_PATH = "config/token.json";
+TOKEN_PATH = "config/studip/token.json";
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the

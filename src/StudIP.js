@@ -2,11 +2,11 @@ const fetch = require("node-fetch");
 const fs = require("fs");
 
 const GoogleDrive = require("./GoogleDrive");
-const secrets = require("./config/secrets.json").stud_ip;
-const url = require("./config/config.json").studipURL;
-const downloadPrefix = require("./config/config.json").download_folder;
+const secrets = require("./config/studip/secrets.json").stud_ip;
+const url = require("./config/studip/config.json").studipURL;
+const downloadPrefix = require("./config/studip/config.json").download_folder;
 
-const hashFile = "config/data/hash.json";
+const hashFile = "config/studip/data/hash.json";
 
 var foundFiles = null;
 

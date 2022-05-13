@@ -1,0 +1,56 @@
+{
+  "haURL": "http://10.0.20.20:8123/api/",
+  "studipURL": "https://elearning.uni-oldenburg.de/api.php/",
+  "download_folder": "config/studip/data/files/",
+  "courses": [
+    {
+      "name": "TI Vorlesung",
+      "id": "47675f96b227175286bc288862f617be",
+      "prefix": "Uebungsblatt\\d{2}\\.pdf"
+    },
+    {
+      "name": "TI Übung",
+      "id": "6150068c934e5a0a98139435fbf023f3",
+      "prefix": "ue\\d{2}_ManuelWustlich_KjellHanken_JulianKropp_Gruppe03_korrigiert\\.pdf"
+    },
+    {
+      "name": "Logik Vorlesung",
+      "id": "b8473067e31c06cda4f2b6297edf0064",
+      "prefix": "ue\\d{2}\\.pdf"
+    },
+    {
+      "name": "ANA Vorlesung",
+      "id": "55535986f7bbc23aaa2a7f508e628010",
+      "prefix": "Übung\\d+\\.pdf"
+    },
+    {
+      "name": "SoftSkills",
+      "id": "07b44897fbca17d9cc8372a5c67357b3",
+      "prefix": "UE\\d+\\.pdf"
+    }
+  ],
+  "folders": [
+    [
+      {
+        "prefix": "Uebungsblatt\\d{2}\\.pdf|ue\\d{2}_ManuelWustlich_KjellHanken_JulianKropp_Gruppe03_korrigiert\\.pdf",
+        "number": "\\d{2}(?=\\.pdf)|\\d{2}(?=_ManuelWustlich_KjellHanken_JulianKropp_Gruppe03_korrigiert\\.pdf)",
+        "dest": "1QdvZ9icoVJ-0w2CJwqsEJefcP2HMisvF"
+      },
+      {
+        "prefix": "ue\\d{2}\\.pdf",
+        "number": "\\d{2}(?=\\.pdf)",
+        "dest": "1sPymx0Dn1FcP3byp-sCa-M_SgQcj3SD9"
+      },
+      {
+        "prefix": "Übung\\d+\\.pdf",
+        "number": "\\d+(?=\\.pdf)",
+        "dest": "1vIc9OEDLNMhF3qGxT5SN_ZA72Gf_nXsC"
+      },
+      {
+        "prefix": "UE\\d+\\.pdf",
+        "number": "\\d+(?=\\.pdf)",
+        "dest": "1BkRtzAJstkD4dj85_kW7_f_10A4p5D1S"
+      }
+    ]
+  ]
+}
