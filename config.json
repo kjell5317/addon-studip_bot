@@ -10,5 +10,6 @@
   "ports": {},
   "options": {},
   "schema": {},
-  "map": ["config:rw"]
+  "map": ["config:rw"],
+  "init": false
 }
