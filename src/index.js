@@ -4,6 +4,7 @@ const GoogleDrive = require("./GoogleDrive");
 
 const config = require("./config/studip/config.json");
 const hashes = require("./config/studip/data/hash.json").hashes;
+const haKey = process.argv.slice(2)[0];
 
 studIpInterface = new StudIP();
 
@@ -22,7 +23,7 @@ async function sync() {
     console.info("####################");
     console.info(course.name);
     await studIpInterface.findFilesInCourse(course.prefix, course.id);
-    await studIpInterface.downloadFoundFiles();
+    await studIpInterface.downloadFoundFiles(haKey);
   }
   for (hash of hashes) {
     if (fs.existsSync(`${config.download_folder}${hash}`)) {

@@ -17,7 +17,7 @@ class StudIP {
     }
   }
 
-  async downloadFoundFiles() {
+  async downloadFoundFiles(haKey) {
     if (!foundFiles) return;
     let newFiles = this.testForNewFiles(foundFiles);
     console.info(`Downloading ${newFiles.length} new files.`);
@@ -31,7 +31,7 @@ class StudIP {
       let buffer = Buffer.from(data);
       fs.writeFile(path, buffer, "binary", () => {});
       paths.push(path);
-      await GoogleDrive.authorize(file.name, file.mime_type);
+      await GoogleDrive.authorize(file.name, file.mime_type, haKey);
     }
     foundFiles = null;
     return paths;

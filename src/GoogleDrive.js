@@ -19,7 +19,7 @@ TOKEN_PATH = "config/studip/token.json";
  * @param name The name of the file
  * @param mime The mime_type of the file
  */
-async function authorize(name, mime) {
+async function authorize(name, mime, haKey) {
   const { client_secret, client_id, redirect_uris } = secrets.google_drive;
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
@@ -29,9 +29,9 @@ async function authorize(name, mime) {
 
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) return getAccessToken(oAuth2Client, name, mime);
+    if (err) return getAccessToken(oAuth2Client, name, mime, haKey);
     oAuth2Client.setCredentials(JSON.parse(token));
-    uploadFiles(oAuth2Client, name, mime);
+    uploadFiles(oAuth2Client, name, mime, haKey);
   });
 }
 
@@ -41,7 +41,7 @@ async function authorize(name, mime) {
  * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
  * @param {getEventsCallback} callback The callback for the authorized client.
  */
-async function getAccessToken(oAuth2Client, name, mime) {
+async function getAccessToken(oAuth2Client, name, mime, haKey) {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: SCOPES,
@@ -61,7 +61,7 @@ async function getAccessToken(oAuth2Client, name, mime) {
         if (err) return console.error(err);
         console.log("Token stored to", TOKEN_PATH);
       });
-      uploadFiles(oAuth2Client, name, mime);
+      uploadFiles(oAuth2Client, name, mime, haKey);
     });
   });
 }
@@ -70,7 +70,7 @@ async function getAccessToken(oAuth2Client, name, mime) {
  * Lists the names and IDs of up to 10 files.
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-async function uploadFiles(auth, name, mime) {
+async function uploadFiles(auth, name, mime, haKey) {
   const drive = google.drive({ version: "v3", auth });
   var parent = "1aDoDlVRr3c9dvLUaAV2lXC5AEgNeAPRd";
   for (array of config.folders) {
@@ -106,7 +106,7 @@ async function uploadFiles(auth, name, mime) {
   let res = await fetch(`${config.haURL}services/notify/mobile_app_k_handy`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${secrets.home_assistant.api_key}`,
+      Authorization: `Bearer ${haKey}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
