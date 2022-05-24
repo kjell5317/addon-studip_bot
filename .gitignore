@@ -33,6 +33,5 @@ web_modules/
 .env.production
 
 # Project related
-secrets.*
 files/
 token.json

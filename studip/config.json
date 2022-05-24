@@ -1,0 +1,20 @@
+{
+  "haURL": "http://localhost:8123/api/",
+  "studipURL": "https://elearning.uni-oldenburg.de/api.php/",
+  "download_folder": "config/studip/data/files/",
+  "courses": [
+    {
+      "name": "<Course Name>",
+      "id": "<Course ID>",
+      "prefix": "Uebungsblatt\\d{2}\\.pdf // RegEx maching all relevant files"
+    }
+  ],
+  "folders": [
+    [
+      {
+        "prefix": "Uebungsblatt\\d{2}\\.pdf",
+        "dest": "<Google Drive Folder ID>"
+      }
+    ]
+  ]
+}
