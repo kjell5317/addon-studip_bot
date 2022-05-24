@@ -9,9 +9,8 @@ RUN apk update && \
     nodejs-current \
     npm
 
-COPY src/package.json /
-RUN cd / && npm i
 COPY src /
+RUN cd / && npm i
 
 COPY run.sh /
 RUN chmod +x /run.sh
