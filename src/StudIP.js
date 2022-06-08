@@ -19,7 +19,7 @@ class StudIP {
 
   async downloadFoundFiles(haKey) {
     if (!foundFiles) return;
-    let newFiles = this.testForNewFiles(foundFiles);
+    const newFiles = this.testForNewFiles(foundFiles);
     console.info(`Downloading ${newFiles.length} new files.`);
     const paths = [];
     for (const file of newFiles) {
@@ -28,7 +28,7 @@ class StudIP {
         fs.mkdirSync(downloadPrefix);
       }
       const data = await this.apiRequest(`/file/${file.id}/download`, "file");
-      let buffer = Buffer.from(data);
+      const buffer = Buffer.from(data);
       fs.writeFile(path, buffer, "binary", () => {});
       paths.push(path);
       await GoogleDrive.authorize(file.name, file.mime_type, haKey);
@@ -44,7 +44,7 @@ class StudIP {
       console.log("Hashfile doesn't exists");
       return [];
     }
-    let hash = JSON.parse(fs.readFileSync(hashFile));
+    const hash = JSON.parse(fs.readFileSync(hashFile));
     fileList = fileList.filter(
       (file) => !hash.hashes.find((val) => val == getHash(file))
     );

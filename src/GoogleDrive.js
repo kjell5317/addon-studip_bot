@@ -11,7 +11,7 @@ const SCOPES = ["https://www.googleapis.com/auth/drive"];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-TOKEN_PATH = "config/studip/token.json";
+const TOKEN_PATH = "config/studip/token.json";
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -73,8 +73,8 @@ async function getAccessToken(oAuth2Client, name, mime, haKey) {
 async function uploadFiles(auth, name, mime, haKey) {
   const drive = google.drive({ version: "v3", auth });
   var parent = "1aDoDlVRr3c9dvLUaAV2lXC5AEgNeAPRd";
-  for (array of config.folders) {
-    for (folder of array) {
+  for (let array of config.folders) {
+    for (let folder of array) {
       const regex = new RegExp(folder.prefix);
       if (regex.test(name)) {
         parent = folder.dest;
@@ -103,7 +103,7 @@ async function uploadFiles(auth, name, mime, haKey) {
       }
     }
   );
-  let res = await fetch(`${config.haURL}services/notify/mobile_app_k_handy`, {
+  const res = await fetch(`${config.haURL}services/notify/mobile_app_k_handy`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${haKey}`,
