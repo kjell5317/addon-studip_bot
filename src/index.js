@@ -9,13 +9,13 @@ const haKey = process.argv.slice(2)[0];
 const studIpInterface = new StudIP();
 
 async function sync() {
-  for (let course of config.courses) {
+  for (const course of config.courses) {
     console.info("####################");
     console.info(course.name);
     await studIpInterface.findFilesInCourse(course.prefix, course.id);
     await studIpInterface.downloadFoundFiles(haKey);
   }
-  for (let hash of hashes) {
+  for (const hash of hashes) {
     if (fs.existsSync(`${config.download_folder}${hash}`)) {
       fs.unlinkSync(`${config.download_folder}${hash}`);
     }

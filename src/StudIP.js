@@ -46,7 +46,7 @@ class StudIP {
     }
     const hash = JSON.parse(fs.readFileSync(hashFile));
     fileList = fileList.filter(
-      (file) => !hash.hashes.find((val) => val == getHash(file))
+      (file) => !hash.hashes.find((val) => val === getHash(file))
     );
 
     fileList.map((file) => {
@@ -64,9 +64,9 @@ class StudIP {
 
   async findFilesInCourse(fileName, courseId) {
     const res = await this.apiRequest(`course/${courseId}/top_folder`);
-    let allFiles = await this.getAllFilesInFolder(res.id, true);
+    const allFiles = await this.getAllFilesInFolder(res.id, true);
 
-    let re = new RegExp(fileName);
+    const re = new RegExp(fileName);
     foundFiles = allFiles.filter((file) => {
       return re.test(file.name);
     });

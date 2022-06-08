@@ -73,8 +73,8 @@ async function getAccessToken(oAuth2Client, name, mime, haKey) {
 async function uploadFiles(auth, name, mime, haKey) {
   const drive = google.drive({ version: "v3", auth });
   var parent = "1aDoDlVRr3c9dvLUaAV2lXC5AEgNeAPRd";
-  for (let array of config.folders) {
-    for (let folder of array) {
+  for (const array of config.folders) {
+    for (const folder of array) {
       const regex = new RegExp(folder.prefix);
       if (regex.test(name)) {
         parent = folder.dest;
