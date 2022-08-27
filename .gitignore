@@ -35,3 +35,4 @@ web_modules/
 # Project related
 files/
 token.json
+secrets.*
